@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SystemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +18,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    return view('index');
+})->name('index');
 
 Route::middleware('auth')->group(function () {
+    //Listing
+    Route::get('/listing', [ListingController::class, 'index'])->name('listing.index');
+    Route::get('/list', [ListingController::class, 'lists'])->name('listing.list');
+
+    //History
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+
+    //System
+    Route::get('/system', [SystemController::class, 'index'])->name('system.index');
+
+    //Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

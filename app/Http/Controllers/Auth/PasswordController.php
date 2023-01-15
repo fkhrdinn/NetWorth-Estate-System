@@ -22,10 +22,15 @@ class PasswordController extends Controller
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
-        $request->user()->update([
+        $check = $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back()->with('status', 'password-updated');
+        if($check)
+        {
+            toast('Password has been updated successfully.','success')->autoClose(5000)->hideCloseButton();
+        }
+
+        return redirect()->route('profile.edit');
     }
 }
