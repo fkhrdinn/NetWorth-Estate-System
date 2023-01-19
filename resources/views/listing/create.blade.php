@@ -1,10 +1,10 @@
 <x-app-layout>
-    <x-slot name="header">
+<x-slot name="header">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="headerFont">
-                        {{ __('History') }}
+                        {{ __('List / ') }} @if($model) Update @else Create @endif
                     </h2>
                 </div>
             </div>
@@ -16,7 +16,13 @@
             <div class="slotColor rounded shadow">
                 <div class="slotText">
                     <div class="container">
-                        <livewire:history-view/>
+                        <div class="mb-4 text-center">
+                            @if(!empty($model))
+                                @livewire('listing-form', ['model' => $model])
+                            @else
+                                @livewire('listing-form')
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

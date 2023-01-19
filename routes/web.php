@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     //Listing
     Route::get('/listing', [ListingController::class, 'index'])->name('listing.index');
     Route::get('/list', [ListingController::class, 'lists'])->name('listing.list');
+    Route::get('/list/create', [ListingController::class, 'create'])->name('listing.create');
+    Route::get('/list/{model}/edit', [ListingController::class, 'edit'])->name('listing.edit');
 
     //History
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');

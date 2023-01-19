@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Validation\Validator;
 
 class ProfileController extends Controller
 {
@@ -35,7 +37,7 @@ class ProfileController extends Controller
         ->update([
             'name' => $request->name,
             'email' => $request->email,
-            'telephone_number' => $request->telephone_number,
+            'telephone_number' => $request->telephone,
             'address' => $request->address
         ]);
 
@@ -52,19 +54,31 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request)
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current-password'],
+        $validated = Hash::check($request->currentPassword, Auth()->user()->password);
+
+        $request->validate([
+            'currentPassword' => ['required'],
         ]);
 
-        $user = $request->user();
+        if($validated)
+        {
+            $user = $request->user();
 
-        Auth::logout();
+            Auth::logout();
 
-        $user->delete();
+            $user->delete();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            
+            return redirect()->route('index')->with('success', 'success');
+        }
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        if(!$validated)
+        {
+            toast('Password is incorrect.','error')->autoClose(5000)->hideCloseButton();
+            return redirect()->route('profile.edit');
+        }
 
-        return Redirect::to('/');
+        
     }
 }

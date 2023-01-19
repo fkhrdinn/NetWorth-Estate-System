@@ -1,38 +1,58 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900">
+        <h2 class="profileText">
             {{ __('Update Password') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="profileColor">
             {{ __('Ensure your account is using a long, random password to stay secure.') }}
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('password.update') }}" class="profileForm">
         @csrf
         @method('put')
 
-        <div>
-            <x-input-label for="current_password" :value="__('Current Password')" />
-            <x-text-input id="current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        <div class="container">
+            <div class="row">
+                @if($errors->has('updatePassword'))
+                    <div class="text-danger">
+                        Wrong Current Password!
+                    </div>
+                @endif
+                <div class="input-group mb-3">
+                    <span class="input-group-text w-25" id="basic-addon1">Current Password</span>
+                    <input type="password" name="updatePassword" class="form-control" placeholder="Current Password" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                
+                @if($errors->has('new_password'))
+                    <div class="text-danger">
+                        Invalid New Password!
+                    </div>
+                @endif
+                <div class="input-group mb-3">
+                    <span class="input-group-text w-25" id="basic-addon1">New Password</span>
+                    <input type="password" name="new_password" class="form-control" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1">
+                   
+                </div>
+                @if($errors->has('password'))
+                    <div class="text-danger">
+                        Confirm Password Not Match!
+                    </div>
+                @endif
+                <div class="input-group mb-3">
+                    <span class="input-group-text w-25" id="basic-addon1">Confirm Password</span>
+                    <input type="password" name="password" class="form-control" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1">
+                    
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary btn-block mb-4">
+                        Save
+                    </button>
+                </div>
+                
+            </div>
         </div>
 
-        <div>
-            <x-input-label for="password" :value="__('New Password')" />
-            <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-        </div>
-
-        <div>
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-        </div>
     </form>
 </section>

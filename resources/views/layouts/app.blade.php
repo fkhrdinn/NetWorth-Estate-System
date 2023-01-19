@@ -19,22 +19,56 @@
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}">
         <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
         @livewireStyles
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body>
+        <div class="">
             @include('sweetalert::alert')
-            @include('layouts.navigation')
+            <nav class="navbar navbar-expand-lg navbar-white bg-white d-flex sticky-top shadow-sm">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav d-flex mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link @if(Route::is('listing.index')) active @endif" href="{{route('listing.index')}}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(Route::is('listing.list')) active @endif" href="{{route('listing.list')}}">Listing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(Route::is('system.index')) active @endif" href="{{route('system.index')}}">Price Prediction</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav d-flex mx-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{route('profile.edit')}}">Profile</a>
+                                <a class="dropdown-item" href="{{route('history.index')}}">History</a>
+                                <li><hr class="dropdown-divider"></li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+                                </form>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
+            @yield('content')
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="headerTitle">
                         {{ $header }}
                     </div>
                 </header>
