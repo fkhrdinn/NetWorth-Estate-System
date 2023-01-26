@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ListingController;
@@ -21,6 +22,8 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
+Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+
 Route::middleware('auth')->group(function () {
     //Listing
     Route::get('/listing', [ListingController::class, 'index'])->name('listing.index');
@@ -39,5 +42,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['auth','admin'])->group(function () {
+    //Admin
+    Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/training', [AdminController::class, 'train'])->name('admin.train');
+    Route::get('/admin/request', [AdminController::class, 'request'])->name('admin.request');
+});
+
+
 
 require __DIR__.'/auth.php';

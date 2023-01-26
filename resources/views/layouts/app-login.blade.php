@@ -10,9 +10,6 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        <!-- Icon -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
         <style>
             body {
                 font-family: 'Nunito', sans-serif;
@@ -29,7 +26,7 @@
         <link rel="stylesheet" href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}">
         <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> -->
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+
         @livewireStyles
 
     </head>
@@ -49,6 +46,8 @@
                 <li><a class="nav-link scrollto" href="{{route('register')}}">Register</a></li>
                 @elseif(Route::is('register'))
                 <li><a class="nav-link scrollto" href="{{route('login')}}">Sign In</a></li>
+                @elseif(Route::is('admin.login'))
+                <li><a class="nav-link scrollto" href="{{route('index')}}">Home</a></li>
                 @else
                 <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                 <li><a class="nav-link scrollto" href="#about">About</a></li>
@@ -105,6 +104,9 @@
                     </div>
                     <div>
                         <li><i class="bx bx-chevron-right"></i> <a href="{{route('register')}}">Register</a></li>
+                    </div>
+                    <div>
+                        <li><i class="bx bx-chevron-right"></i> <a href="{{route('admin.login')}}">Admin</a></li>
                     </div>
                     </ul>
                 </div>

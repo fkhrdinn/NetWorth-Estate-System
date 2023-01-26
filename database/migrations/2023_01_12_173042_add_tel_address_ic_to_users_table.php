@@ -15,11 +15,18 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('telephone_number')
+            ->nullable()
             ->after('name');
             $table->text('address')
+            ->nullable()
             ->after('email');
             $table->string('identification_number')
+            ->nullable()
             ->after('name');
+            $table->boolean('role')
+            ->nullable()
+            ->default(0)
+            ->after('email');
         });
     }
 
@@ -34,6 +41,7 @@ return new class extends Migration
             $table->dropColumn('telephone_number');
             $table->dropColumn('address');
             $table->dropColumn('identification_number');
+            $table->dropColumn('role');
         });
     }
 };

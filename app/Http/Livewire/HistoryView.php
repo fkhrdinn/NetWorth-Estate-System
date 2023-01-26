@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Listing;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ class HistoryView extends Component
     {
         $model->update([
             'status' => 'Processed',
+            'request_date' => Carbon::now(),
             'deleted_at' => NULL
         ]);
 

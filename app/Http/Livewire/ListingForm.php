@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use App\Models\Listing;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -69,7 +70,8 @@ class ListingForm extends Component
             'bedroom' => $this->bedroom,
             'user_id' => Auth::user()->id,
             'origin' => 'Manual',
-            'status' => 'Processed'
+            'status' => 'Processed',
+            'request_date' => Carbon::now()
         ]);
 
         if($this->images)

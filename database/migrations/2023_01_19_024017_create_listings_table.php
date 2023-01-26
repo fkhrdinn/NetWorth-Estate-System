@@ -23,13 +23,14 @@ return new class extends Migration
             $table->string('furnish_type')->nullable();
             $table->integer('bathroom')->nullable();
             $table->integer('bedroom')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->foreign('admin_id')->references('id')->on('admins');
+            $table->foreign('admin_id')->references('id')->on('users');
             $table->string('status')->nullable();
             $table->string('origin')->nullable();
             $table->dateTime('request_date')->nullable();
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }

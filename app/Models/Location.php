@@ -9,9 +9,10 @@ class Location extends Model
 {
     use HasFactory;
 
-    protected $fillables = [
+    protected $fillable = [
         'name',
         'median_income',
+        'land_price',
         'price_per_square_feet',
         'traffic',
         'house_type'
